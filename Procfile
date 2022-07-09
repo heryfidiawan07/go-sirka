@@ -1,1 +1,1 @@
-web: bin/go-sirka
+web: bin/app/
