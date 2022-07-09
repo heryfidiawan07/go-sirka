@@ -1,9 +1,3 @@
-# FROM golang:1.14.9-alpine
-# RUN mkdir /build
-# ADD go.mod go.sum server.go /build/
-# WORKDIR /build
-# RUN go build
-
 # Start from golang base image
 FROM golang:alpine
 
@@ -12,7 +6,7 @@ LABEL maintainer="Heri Fidiawan"
 
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git && apk add --no-cach bash && apk add build-base
+RUN apk update && apk add --no-cache git && apk add --no-cache bash && apk add build-base
 
 # Setup folders
 RUN mkdir /app
@@ -23,16 +17,13 @@ COPY . .
 COPY .env .
 
 # Download all the dependencies
-#RUN go get -d -v ./...
+RUN go get -d -v ./...
 
 # Install the package
-#RUN go install -v ./...
+RUN go install -v ./...
 
-# Build the Go app
-RUN go build -o /build
+#Setup hot-reload for dev stage
+RUN go get github.com/githubnemo/CompileDaemon
+RUN go get -v golang.org/x/tools/gopls
 
-# Expose port 8080 to the outside world
-EXPOSE 8081
-
-# Run the executable
-CMD [ "/build" ]
+ENTRYPOINT CompileDaemon --build="go build -a -installsuffix cgo -o main ." --command=./main
