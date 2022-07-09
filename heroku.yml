@@ -1,15 +1,6 @@
-version: '2'
-services:
-  web:
-    build: .
-    ports:
-      - "8080:8080"
-    # env_file: .env
-    depends_on:
-      - db
-    # volumes:
-    #   - ./webapp:/opt/webapp
-  db:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
+build:
+  docker:
+    web: Dockerfile
+
+run:
+  web: ./app
