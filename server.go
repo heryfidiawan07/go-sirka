@@ -21,5 +21,6 @@ func main() {
 	router.POST("/DisplayUser", controller.DisplayUser)
 
 	// router.Run("127.0.0.1:8000")
-	router.Run("go-sirka.herokuapp.com:8080")
+	// router.Run("go-sirka.herokuapp.com:8080")
+	router.Run("https://go-sirka.herokuapp.com")
 }
